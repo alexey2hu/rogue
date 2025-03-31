@@ -13,18 +13,17 @@ mapUpdate.render()
 const enemies = []
 
 // Получаем все объекты на карте, включая врагов
-const enemyPositions = gameMap
-	.getAllObjectCoordinates()
-	.filter(pos => pos.tile.startsWith('tile-E')) // Фильтруем только врагов (tile-E)
+const enemyPositions = mapUpdate.findObjectCoordinates('tile-E')
 
-enemyPositions.forEach((pos, index) => {
-	// Создаем экземпляр врага с его уникальным ID
-	const enemyInstance = new Enemy(gameMap, mapUpdate, index, {
-		x: pos.x,
-		y: pos.y,
+if (enemyPositions) {
+	enemyPositions.forEach((position, index) => {
+		const { x, y } = position // Извлекаем координаты x и y
+
+		// Создаем экземпляр врага с его уникальным ID
+		const enemyInstance = new Enemy(gameMap, mapUpdate, index, { x, y })
+		enemies.push(enemyInstance) // Добавляем врага в массив
 	})
-	enemies.push(enemyInstance) // Добавляем врага в массив
-})
+}
 
 // Создание игрока
 const player = new Player(gameMap, mapUpdate, enemies)

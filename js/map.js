@@ -137,19 +137,6 @@ class Map {
 		})
 	}
 
-	// Метод для получения всех координат объектов на карте
-	getAllObjectCoordinates() {
-		const coordinates = []
-		for (let y = 0; y < this.height; y++) {
-			for (let x = 0; x < this.width; x++) {
-				if (this.grid[y][x].startsWith('tile-')) {
-					coordinates.push({ x, y, tile: this.grid[y][x] })
-				}
-			}
-		}
-		return coordinates
-	}
-
 	// Метод для проверки связности всех клеток типа 'tile-'
 	isAllConnected() {
 		const visited = Array.from({ length: this.height }, () =>

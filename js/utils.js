@@ -14,6 +14,61 @@ class Utils {
 		}
 	}
 
+	// Метод для передвижения
+	static moveRandom(type) {
+		const { x, y } = this.position
+
+		let directions = [
+			{ dx: 0, dy: -1 }, // вверх
+			{ dx: -1, dy: 0 }, // влево
+			{ dx: 0, dy: 1 }, // вниз
+			{ dx: 1, dy: 0 }, // вправо
+		]
+
+		const direction = directions[Math.floor(Math.random() * directions.length)]
+
+		// Проверка по типу
+		if (this.gameMap.grid[y][x] === 'tile-E') {
+			// Если враг
+		} else if (this.gameMap.grid[y][x] === 'tile-P') {
+			// Если игрок
+		}
+
+		const newX = x + direction.dx
+		const newY = y + direction.dy
+
+		if (
+			newX >= 0 &&
+			newX < this.gameMap.width &&
+			newY >= 0 &&
+			newY < this.gameMap.height
+		) {
+			const targetTile = this.gameMap.grid[newY][newX]
+
+			// Если на новой клетке игрок — атакуем, но не двигаемся
+			if (targetTile === 'tile-P') {
+				Utils.takeDamage(player, this.attackPower)
+				return
+			}
+
+			if (
+				targetTile !== 'tile-W' &&
+				targetTile !== 'tile-E' &&
+				targetTile !== 'tile-HP' &&
+				targetTile !== 'tile-SW'
+			) {
+				this.mapUpdate.removeHealthBar(x, y)
+				this.gameMap.grid[y][x] = 'tile-'
+				this.gameMap.grid[newY][newX] = this.tileType
+				this.updatePosition(newX, newY)
+				this.mapUpdate.updateTile(newX, newY)
+				this.mapUpdate.updateTile(x, y)
+				Utils.updateHealthDisplay(this.tileType, newX, newY, this.health)
+				console.log(`Враг ${this.id} успешно переместился в (${newX}, ${newY})`)
+			}
+		}
+	}
+
 	// Метод для получения урона
 	static takeDamage(target, damage) {
 		// Уменьшаем здоровье, не позволяя ему стать отрицательным
@@ -32,7 +87,7 @@ class Utils {
 
 			// Если здоровье достигло нуля, вызываем метод смерти
 			if (target.health === 0) {
-				this.die(target, x, y)
+				Utils.die(target, x, y)
 			}
 		}
 	}

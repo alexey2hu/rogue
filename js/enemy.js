@@ -47,21 +47,6 @@ class Enemy {
 			{ dx: 1, dy: 0 }, // вправо
 		]
 
-		// Определяем направление к игроку
-		const playerPosition = player.getObjectPosition('tile-P')
-		if (playerPosition) {
-			const dx = playerPosition.x - x
-			const dy = playerPosition.y - y
-
-			if (Math.abs(dx) > Math.abs(dy)) {
-				if (dx > 0) directions = [{ dx: 1, dy: 0 }, ...directions]
-				else directions = [{ dx: -1, dy: 0 }, ...directions]
-			} else {
-				if (dy > 0) directions = [{ dx: 0, dy: 1 }, ...directions]
-				else directions = [{ dx: 0, dy: -1 }, ...directions]
-			}
-		}
-
 		const direction = directions[Math.floor(Math.random() * directions.length)]
 		const newX = x + direction.dx
 		const newY = y + direction.dy

@@ -1,3 +1,5 @@
+import Utils from './utils.js'
+
 class Player {
 	constructor(gameMap, mapUpdate, enemies) {
 		this.gameMap = gameMap // Ссылка на объект карты
@@ -13,7 +15,7 @@ class Player {
 		const position = this.getObjectPosition(this.tileType)
 		if (position) {
 			const { x, y } = position
-			this.updateHealthDisplay(x, y)
+			Utils.updateHealthDisplay(this.tileType, x, y, this.health)
 			const tileElement = document.querySelector(
 				`.tile-P[data-x='${x}'][data-y='${y}']`
 			)
@@ -27,17 +29,6 @@ class Player {
 	getObjectPosition(tileType) {
 		const position = this.mapUpdate.findObjectCoordinates(tileType)
 		return position && position.length > 0 ? position[0] : null
-	}
-
-	// Метод для обновления отображения здоровья на карте
-	updateHealthDisplay(x, y) {
-		const healthBar = `<div class='health' style='width: ${this.health}%;'></div>`
-		const healthCountElement = document.getElementById('HP-count')
-		const tileElement = document.querySelector(
-			`.tile-P[data-x='${x}'][data-y='${y}']`
-		)
-		tileElement.innerHTML = healthBar
-		healthCountElement.textContent = `${this.health}%`
 	}
 
 	// Метод для обновления урона в инвентаре
@@ -54,10 +45,10 @@ class Player {
 
 		const { x, y } = position
 		const directions = [
-			{ dx: 0, dy: -1 }, // вверх
-			{ dx: -1, dy: 0 }, // влево
-			{ dx: 0, dy: 1 }, // вниз
-			{ dx: 1, dy: 0 }, // вправо
+			{ dx: 0, dy: -1 },
+			{ dx: -1, dy: 0 },
+			{ dx: 0, dy: 1 },
+			{ dx: 1, dy: 0 },
 		]
 
 		directions.forEach(direction => {
@@ -89,14 +80,10 @@ class Player {
 	// Метод для получения урона
 	takeDamage(damage) {
 		this.health = Math.max(this.health - damage, 0)
-
-		// Обновляем здоровье на карте
 		const position = this.getObjectPosition(this.tileType)
 		if (position) {
 			const { x, y } = position
-			this.updateHealthDisplay(x, y)
-
-			// Если здоровье закончилось — игрок умирает
+			Utils.updateHealthDisplay(this.tileType, x, y, this.health)
 			if (this.health === 0) {
 				this.die()
 			}
@@ -106,7 +93,11 @@ class Player {
 	// Метод для восстановления здоровья
 	restoreHealth(amount) {
 		this.health = Math.min(this.health + amount, 100)
-		this.updateHealthDisplay(x, y) // Обновляем здоровье в интерфейсе
+		const position = this.getObjectPosition(this.tileType)
+		if (position) {
+			const { x, y } = position
+			Utils.updateHealthDisplay(this.tileType, x, y, this.health)
+		}
 	}
 
 	// Метод для обработки смерти игрока
@@ -118,43 +109,32 @@ class Player {
 	// Метод для перемещения игрока
 	move(direction) {
 		const position = this.getObjectPosition(this.tileType)
-		if (!position) return // Если игрок не найден, выходим из метода
+		if (!position) return
 
 		const { x, y } = position
 		const newX = x + direction.dx
 		const newY = y + direction.dy
-		// Проверка, не выходит ли персонаж за пределы карты
 		if (
 			newX >= 0 &&
 			newX < this.gameMap.width &&
 			newY >= 0 &&
 			newY < this.gameMap.height
 		) {
-			// Проверяем, что клетка не является стеной или врагом
 			const targetTile = this.gameMap.grid[newY][newX]
 			if (targetTile !== 'tile-W' && targetTile !== 'tile-E') {
-				// Взаимодействие с плитками
 				if (targetTile === 'tile-HP') {
-					this.health = Math.min(this.health + 20, 100) // Восстанавливаем здоровье
+					this.restoreHealth(20)
 				} else if (targetTile === 'tile-SW') {
-					this.attackPower += 10 // Увеличиваем силу атаки
-					this.updateAttackPowerDisplay() // Обновляем отображение урона
+					this.attackPower += 10
+					this.updateAttackPowerDisplay()
 				}
 
-				// Удаляем старую полоску здоровья, если она существует
 				this.mapUpdate.removeHealthBar(x, y)
-				this.gameMap.grid[y][x] = 'tile-' // Освобождаем старую позицию
-
-				// Новая позиция для игрока
+				this.gameMap.grid[y][x] = 'tile-'
 				this.gameMap.grid[newY][newX] = this.tileType
-				// Обновляем отображение карты
 				this.mapUpdate.updateTile(newX, newY)
-				this.mapUpdate.updateTile(x, y) // Обновляем старую позицию
-
-				// Обновляем отображение здоровья
-				this.updateHealthDisplay(newX, newY)
-
-				// Добавляем полоску здоровья
+				this.mapUpdate.updateTile(x, y)
+				Utils.updateHealthDisplay(this.tileType, newX, newY, this.health)
 				const tileElement = document.querySelector(
 					`.tile-P[data-x='${newX}'][data-y='${newY}']`
 				)

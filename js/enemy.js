@@ -1,3 +1,5 @@
+import Utils from './utils.js'
+
 class Enemy {
 	static enemies = [] // Статический массив врагов
 
@@ -9,17 +11,13 @@ class Enemy {
 		this.attackPower = 10
 		this.id = id
 		this.position = initialPosition
-		this.updateHealthDisplay(initialPosition.x, initialPosition.y)
-		Enemy.enemies.push(this) // Добавляем врага в статический массив
-	}
-
-	// Метод для обновления отображения здоровья
-	updateHealthDisplay(x, y) {
-		const healthBar = `<div class='health' style='width: ${this.health}%;'></div>`
-		const tileElement = document.querySelector(
-			`.tile-E[data-x='${x}'][data-y='${y}']`
+		Utils.updateHealthDisplay(
+			this.tileType,
+			this.position.x,
+			this.position.y,
+			this.health
 		)
-		if (tileElement) tileElement.innerHTML = healthBar
+		Enemy.enemies.push(this) // Добавляем врага в статический массив
 	}
 
 	// Метод для атаки
@@ -99,7 +97,7 @@ class Enemy {
 				this.updatePosition(newX, newY)
 				this.mapUpdate.updateTile(newX, newY)
 				this.mapUpdate.updateTile(x, y)
-				this.updateHealthDisplay(newX, newY)
+				Utils.updateHealthDisplay(this.tileType, newX, newY, this.health)
 				console.log(`Враг ${this.id} успешно переместился в (${newX}, ${newY})`)
 			}
 		}
@@ -113,7 +111,12 @@ class Enemy {
 	// Метод для уменьшения здоровья врага
 	takeDamage(damage) {
 		this.health = Math.max(this.health - damage, 0)
-		this.updateHealthDisplay(this.position.x, this.position.y)
+		Utils.updateHealthDisplay(
+			this.tileType,
+			this.position.x,
+			this.position.y,
+			this.health
+		)
 
 		if (this.health === 0) {
 			this.die()

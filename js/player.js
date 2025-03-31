@@ -89,41 +89,7 @@ class Player {
 
 	// Метод для перемещения игрока
 	move(direction) {
-		const position = this.getObjectPosition(this.tileType)
-		if (!position) return
-
-		const { x, y } = position
-		const newX = x + direction.dx
-		const newY = y + direction.dy
-		if (
-			newX >= 0 &&
-			newX < this.gameMap.width &&
-			newY >= 0 &&
-			newY < this.gameMap.height
-		) {
-			const targetTile = this.gameMap.grid[newY][newX]
-			if (targetTile !== 'tile-W' && targetTile !== 'tile-E') {
-				if (targetTile === 'tile-HP') {
-					this.restoreHealth(20)
-				} else if (targetTile === 'tile-SW') {
-					this.attackPower += 10
-					this.updateAttackPowerDisplay()
-				}
-
-				this.mapUpdate.removeHealthBar(x, y)
-				this.gameMap.grid[y][x] = 'tile-'
-				this.gameMap.grid[newY][newX] = this.tileType
-				this.mapUpdate.updateTile(newX, newY)
-				this.mapUpdate.updateTile(x, y)
-				Utils.updateHealthDisplay(this.tileType, newX, newY, this.health)
-				const tileElement = document.querySelector(
-					`.tile-P[data-x='${newX}'][data-y='${newY}']`
-				)
-				if (tileElement) {
-					this.mapUpdate.addHealthBar(tileElement, this.health)
-				}
-			}
-		}
+		Utils.moveObject(this, direction)
 	}
 }
 

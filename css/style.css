@@ -1,0 +1,136 @@
+/* Общие стили */
+* {
+	box-sizing: border-box;
+}
+
+body,
+html {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: #000000;
+	color: #ffffff;
+	font-family: 'Ubuntu', sans-serif;
+	text-align: center; /* По центру */
+}
+
+/* Заголовок */
+h1 {
+	font-family: 'Playfair Display', serif;
+	font-size: 30px;
+	padding: 10px;
+	margin: 0;
+}
+
+/* Игровое поле */
+.field-box {
+	border: 2px solid #d0d0d0;
+	display: flex;
+	justify-content: center;
+}
+.field {
+	position: relative;
+	background-color: #333;
+	border: 1px solid #fff;
+	width: 400px;
+	height: 400px;
+}
+
+/* Очистка */
+.cl {
+	clear: both;
+	display: block;
+}
+
+/* Наполнители (тайлы) */
+.tile {
+	position: absolute;
+	background-size: cover;
+}
+.tile- {
+	background-image: url('/images/tile-.png'); /* Пустое место */
+}
+.tile-W {
+	background-image: url('/images/tile-W.png'); /* Стена */
+}
+.tile-E {
+	background-image: url('/images/tile-E.png');
+}
+.tile-P {
+	background-image: url('/images/tile-P.png');
+}
+.tile-HP {
+	background-image: url('/images/tile-HP.png');
+}
+.tile-SW {
+	background-image: url('/images/tile-SW.png');
+}
+/* Полоска здоровья */
+.tile .health {
+	background-color: #ff0000; /* Цвет полоски здоровья */
+	position: absolute;
+	left: 0;
+	top: -5px; /* Полоска будет располагаться чуть выше тайла */
+	width: 100%; /* 100% ширины тайла */
+	height: 4px; /* Высота полоски */
+	border-radius: 2px; /* Скругленные углы */
+	z-index: 10; /* Чтобы полоска была поверх других элементов */
+}
+
+.tile-P .health {
+	background-color: #00ff00; /* Цвет полоски здоровья для героя */
+}
+
+/* Анимация для покраснения при атаке */
+.hit-animation {
+	animation: hitFlash 0.5s ease-out;
+}
+
+@keyframes hitFlash {
+	0% {
+		background-color: red;
+	}
+	50% {
+		background-color: transparent;
+	}
+	100% {
+		background-color: red;
+	}
+}
+
+/* Инвентарь */
+.inventory-box {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+/* Каждый элемент инвентаря */
+.inventory-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 0 15px; /* Отступы между иконками */
+}
+
+.item-icon {
+	width: 50px;
+	height: auto;
+	margin-bottom: 5px; /* Отступ от иконки до количества */
+}
+
+.item-count {
+	font-size: 18px;
+	color: white;
+}
+
+.item-description {
+	text-align: center;
+	color: white;
+	font-size: 14px;
+}

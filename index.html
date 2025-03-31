@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<link
+			href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,700&subset=cyrillic"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&subset=cyrillic"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&subset=cyrillic"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i|Tinos:400,400i&subset=cyrillic"
+			rel="stylesheet"
+		/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
+	<body>
+		<h1>Игровое поле</h1>
+		<div class="field-box"><div class="field"></div></div>
+		<div class="cl"></div>
+
+		<h2>Инвентарь</h2>
+		<div class="inventory-box">
+			<!-- Мечи -->
+			<div class="inventory-item">
+				<img src="images/tile-SW.png" alt="dmg" class="item-icon" />
+				<span class="item-count" id="sword-count">30</span>
+				<div class="item-description">Урон</div>
+			</div>
+
+			<!-- Щиты -->
+			<div class="inventory-item">
+				<img src="images/tile-HP.png" alt="HP" class="item-icon" />
+				<span class="item-count" id="HP-count">100%</span>
+				<div class="item-description">Здоровье</div>
+			</div>
+		</div>
+
+		<script type="module" src="js/game.js"></script>
+	</body>
+</html>

@@ -20,11 +20,6 @@ class Enemy {
 		Enemy.enemies.push(this) // Добавляем врага в статический массив
 	}
 
-	// Метод для атаки
-	attack(player) {
-		player.takeDamage(this.attackPower)
-	}
-
 	// Метод для получения текущих координат врага
 	getPosition() {
 		return this.position
@@ -81,7 +76,7 @@ class Enemy {
 
 			// Если на новой клетке игрок — атакуем, но не двигаемся
 			if (targetTile === 'tile-P') {
-				this.attack(player) // Передаем игрока в метод атаки
+				Utils.takeDamage(player, this.attackPower)
 				return
 			}
 

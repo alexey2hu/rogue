@@ -68,26 +68,13 @@ class Player {
 							enemy.getPosition().x === targetX &&
 							enemy.getPosition().y === targetY
 					)
+					// Атака врага
 					if (enemy) {
-						enemy.takeDamage(this.attackPower)
-						console.log(`Враг на клетке (${targetX}, ${targetY}) атакован!`)
+						Utils.takeDamage(enemy, this.attackPower)
 					}
 				}
 			}
 		})
-	}
-
-	// Метод для получения урона
-	takeDamage(damage) {
-		this.health = Math.max(this.health - damage, 0)
-		const position = this.getObjectPosition(this.tileType)
-		if (position) {
-			const { x, y } = position
-			Utils.updateHealthDisplay(this.tileType, x, y, this.health)
-			if (this.health === 0) {
-				this.die()
-			}
-		}
 	}
 
 	// Метод для восстановления здоровья

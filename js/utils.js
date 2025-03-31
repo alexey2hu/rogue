@@ -13,6 +13,29 @@ class Utils {
 			if (healthCountElement) healthCountElement.textContent = `${health}%`
 		}
 	}
+
+	// Метод для получения урона
+	static takeDamage(target, damage) {
+		// Уменьшаем здоровье, не позволяя ему стать отрицательным
+		target.health = Math.max(target.health - damage, 0)
+
+		// Определяем координаты в зависимости от наличия метода получения позиции
+		const position =
+			typeof target.getObjectPosition === 'function'
+				? target.getObjectPosition(target.tileType)
+				: target.position
+
+		// Если координаты найдены, обновляем отображение здоровья
+		if (position) {
+			const { x, y } = position
+			Utils.updateHealthDisplay(target.tileType, x, y, target.health)
+
+			// Если здоровье достигло нуля, вызываем метод смерти
+			if (target.health === 0 && typeof target.die === 'function') {
+				target.die()
+			}
+		}
+	}
 }
 
 export default Utils

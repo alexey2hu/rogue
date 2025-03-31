@@ -87,12 +87,6 @@ class Player {
 		}
 	}
 
-	// Метод для обработки смерти игрока
-	die() {
-		console.log('Игрок погиб! Игра окончена.')
-		alert('Вы проиграли! Игра окончена.')
-	}
-
 	// Метод для перемещения игрока
 	move(direction) {
 		const position = this.getObjectPosition(this.tileType)

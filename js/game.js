@@ -1,5 +1,3 @@
-console.log('game.js loaded')
-
 import Enemy from './enemy.js'
 import Map from './map.js'
 import MapUpdate from './mapUpdate.js'

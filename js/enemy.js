@@ -97,36 +97,6 @@ class Enemy {
 			}
 		}
 	}
-
-	// Метод для получения информации о текущем здоровье
-	getHealth() {
-		return this.health
-	}
-
-	// Метод для уменьшения здоровья врага
-	takeDamage(damage) {
-		this.health = Math.max(this.health - damage, 0)
-		Utils.updateHealthDisplay(
-			this.tileType,
-			this.position.x,
-			this.position.y,
-			this.health
-		)
-
-		if (this.health === 0) {
-			this.die()
-		}
-	}
-
-	die() {
-		const { x, y } = this.position
-		this.mapUpdate.removeHealthBar(x, y)
-		this.gameMap.grid[y][x] = 'tile-' // Заменяем тайл на пустой
-		this.mapUpdate.updateTile(x, y) // Обновляем визуально
-
-		// Удаляем врага из статического массива
-		Enemy.enemies = Enemy.enemies.filter(enemy => enemy.id !== this.id)
-	}
 }
 
 export default Enemy

@@ -31,9 +31,24 @@ class Utils {
 			Utils.updateHealthDisplay(target.tileType, x, y, target.health)
 
 			// Если здоровье достигло нуля, вызываем метод смерти
-			if (target.health === 0 && typeof target.die === 'function') {
-				target.die()
+			if (target.health === 0) {
+				this.die(target, x, y)
 			}
+		}
+	}
+
+	// Метод для обработки смерти
+	static die(target, x, y) {
+		// Удаляем полоску здоровья
+		if (target.mapUpdate) target.mapUpdate.removeHealthBar(x, y)
+
+		// Заменяем тайл на пустой
+		target.gameMap.grid[y][x] = 'tile-'
+		if (target.mapUpdate) target.mapUpdate.updateTile(x, y) // Обновляем визуально
+
+		// Если это игрок, выводим сообщение
+		if (target.tileType === 'tile-P') {
+			alert('Вы проиграли! Игра окончена.')
 		}
 	}
 }

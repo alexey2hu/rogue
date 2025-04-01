@@ -1,25 +1,21 @@
 // Класс для обновления и вывода карты
 class MapUpdate {
 	constructor(gameMap) {
-		this.gameMap = gameMap // Ссылка на объект карты
-		this.tileSize = this.gameMap.tileSize // Размер тайлов
+		this.gameMap = gameMap
+		this.tileSize = this.gameMap.tileSize
+		this.field = document.querySelector('.field') // Кэшируем ссылку на поле
 	}
 
 	// Метод для получения координат всех объектов указанного типа
 	findObjectCoordinates(tileType) {
-		const coordinates = [] // Массив для хранения координат объектов
-
-		// Проходим по всей карте и ищем все объекты указанного типа
+		const coordinates = []
 		for (let y = 0; y < this.gameMap.height; y++) {
 			for (let x = 0; x < this.gameMap.width; x++) {
-				const tile = this.gameMap.grid[y][x]
-				if (tile.startsWith(tileType)) {
-					// Проверяем, начинается ли строка с нужного типа
-					coordinates.push({ x, y }) // Добавляем координаты объекта в массив
+				if (this.gameMap.grid[y][x].startsWith(tileType)) {
+					coordinates.push({ x, y })
 				}
 			}
 		}
-		// Возвращаем массив координат всех найденных объектов
 		return coordinates.length > 0 ? coordinates : null
 	}
 
@@ -33,52 +29,61 @@ class MapUpdate {
 		}
 	}
 
-	// Добавляем метод для удаления полоски здоровья
+	// Удаляем полоску здоровья
 	removeHealthBar(x, y) {
-		const field = document.querySelector('.field')
-		const tile = field.children[y * this.gameMap.width + x] // Находим соответствующий тайл
-		const healthBar = tile.querySelector('.health')
-		if (healthBar) {
-			tile.removeChild(healthBar) // Удаляем полоску здоровья
-		}
+		const tile = this.field.children[y * this.gameMap.width + x]
+		const healthBar = tile?.querySelector('.health')
+		if (healthBar) tile.removeChild(healthBar)
 	}
 
 	// Метод для отрисовки карты на экране
 	render() {
-		const field = document.querySelector('.field')
-		field.innerHTML = '' // Очистка поля
-		field.style.width = `${this.gameMap.width * this.tileSize}px`
-		field.style.height = `${this.gameMap.height * this.tileSize}px`
+		// Очистка поля перед отрисовкой
+		this.field.innerHTML = ''
 
-		// Отрисовка каждого тайла на карте
+		// Установка размеров поля
+		this.field.style.width = `${this.gameMap.width * this.tileSize}px`
+		this.field.style.height = `${this.gameMap.height * this.tileSize}px`
+
+		// Используем фрагмент для массового добавления тайлов
+		const fragment = document.createDocumentFragment()
 		for (let y = 0; y < this.gameMap.height; y++) {
 			for (let x = 0; x < this.gameMap.width; x++) {
-				this.createTile(x, y)
+				const tile = this.createTile(x, y)
+				fragment.appendChild(tile)
+			}
+		}
+		this.field.appendChild(fragment) // Добавляем все тайлы одним действием
+	}
+
+	// Обновление конкретного тайла
+	updateTile(x, y) {
+		const tile = this.field.children[y * this.gameMap.width + x]
+		if (tile) {
+			tile.className = 'tile' // Всегда класс "tile"
+			const tileType = this.gameMap.grid[y][x]
+			if (tileType) {
+				tile.classList.add(tileType) // Добавляем тип тайла как класс
 			}
 		}
 	}
 
-	// Метод для обновления конкретного тайла
-	updateTile(x, y) {
-		const field = document.querySelector('.field')
-		const tile = field.children[y * this.gameMap.width + x] // Находим соответствующий тайл
-		tile.className = 'tile ' + this.gameMap.grid[y][x] // Обновляем класс тайла
-	}
-
-	// Метод для создания нового тайла
+	// Создание тайла
 	createTile(x, y) {
-		const field = document.querySelector('.field')
 		const tile = document.createElement('div')
-		tile.classList.add('tile', this.gameMap.grid[y][x])
+		tile.className = 'tile' // Класс всегда "tile"
+		const tileType = this.gameMap.grid[y][x]
+		if (tileType) {
+			tile.classList.add(tileType) // Добавляем тип как дополнительный класс
+		}
 		tile.style.position = 'absolute'
 		tile.style.width = `${this.tileSize}px`
 		tile.style.height = `${this.tileSize}px`
 		tile.style.top = `${y * this.tileSize}px`
 		tile.style.left = `${x * this.tileSize}px`
-		tile.setAttribute('data-x', x) // Добавляем атрибут x
-		tile.setAttribute('data-y', y) // Добавляем атрибут y
-
-		field.appendChild(tile) // Добавляем тайл на поле
+		tile.dataset.x = x
+		tile.dataset.y = y
+		return tile
 	}
 }
 

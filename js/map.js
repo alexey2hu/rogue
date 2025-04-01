@@ -165,7 +165,7 @@ class Map {
 			}
 		}
 
-		// Проверяем, все ли клетки 'tile-' были посещены
+		// Проверяем, все ли клетки 'tывile-' были посещены
 		return this.grid.every((row, y) =>
 			row.every((cell, x) => cell !== 'tile-' || visited[y][x])
 		)

@@ -101,6 +101,22 @@ class Utils {
 			// Если здоровье достигло нуля, вызываем метод смерти
 			if (target.health === 0) {
 				Utils.die(target, x, y)
+			} else {
+				// Находим тайл по координатам
+				const field = document.querySelector('.field')
+				const tile = field.querySelector(`[data-x="${x}"][data-y="${y}"]`)
+
+				// Создаем элемент для анимации удара
+				if (tile) {
+					const hitElement = document.createElement('div')
+					hitElement.classList.add('hit-animation')
+					tile.appendChild(hitElement) // Добавляем элемент для анимации на тайл
+
+					// Удаляем элемент после завершения анимации (500ms)
+					setTimeout(() => {
+						tile.removeChild(hitElement) // Убираем элемент из DOM
+					}, 100)
+				}
 			}
 		}
 	}

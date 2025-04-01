@@ -68,7 +68,8 @@ h1 {
 .tile-SW {
 	background-image: url('/images/tile-SW.png');
 }
-/* Полоска здоровья */
+
+/* Полоски здоровья */
 .tile .health {
 	background-color: #ff0000; /* Цвет полоски здоровья */
 	position: absolute;
@@ -79,26 +80,19 @@ h1 {
 	border-radius: 2px; /* Скругленные углы */
 	z-index: 10; /* Чтобы полоска была поверх других элементов */
 }
-
 .tile-P .health {
 	background-color: #00ff00; /* Цвет полоски здоровья для героя */
 }
 
-/* Анимация для покраснения при атаке */
+/* Анимации */
 .hit-animation {
-	animation: hitFlash 0.5s ease-out;
-}
-
-@keyframes hitFlash {
-	0% {
-		background-color: red;
-	}
-	50% {
-		background-color: transparent;
-	}
-	100% {
-		background-color: red;
-	}
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: red;
+	opacity: 0.2;
+	animation: hitFlash 0.1s ease-out;
+	z-index: 5; /* Поверх изображения */
 }
 
 /* Инвентарь */
@@ -109,26 +103,21 @@ h1 {
 	justify-content: center;
 	background: rgba(0, 0, 0, 0.5);
 }
-
-/* Каждый элемент инвентаря */
 .inventory-item {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	margin: 0 15px; /* Отступы между иконками */
 }
-
 .item-icon {
 	width: 50px;
 	height: auto;
 	margin-bottom: 5px; /* Отступ от иконки до количества */
 }
-
 .item-count {
 	font-size: 18px;
 	color: white;
 }
-
 .item-description {
 	text-align: center;
 	color: white;

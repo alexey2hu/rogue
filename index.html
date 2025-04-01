@@ -5,6 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
+		<!-- Шрифты -->
 		<link
 			href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,700&subset=cyrillic"
 			rel="stylesheet"
@@ -21,6 +22,7 @@
 			href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i|Tinos:400,400i&subset=cyrillic"
 			rel="stylesheet"
 		/>
+		<!-- JQuery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="css/style.css" />
 	</head>
@@ -28,6 +30,12 @@
 		<h1>Игровое поле</h1>
 		<div class="field-box"><div class="field"></div></div>
 		<div class="cl"></div>
+
+		<!-- Окно состояния игры -->
+		<div id="game-status" class="game-status">
+			<h2 id="status-message">Добро пожаловать в игру!</h2>
+			<button id="restart-button">Старт</button>
+		</div>
 
 		<h1>Инвентарь</h1>
 		<div class="inventory-box">
@@ -37,7 +45,6 @@
 				<span class="item-count" id="sword-count">30</span>
 				<div class="item-description">Урон</div>
 			</div>
-
 			<!-- Щиты -->
 			<div class="inventory-item">
 				<img src="images/tile-HP.png" alt="HP" class="item-icon" />
@@ -47,5 +54,11 @@
 		</div>
 
 		<script type="module" src="js/game.js"></script>
+		<script>
+			// Убедись, что игра запускается только после полной загрузки страницы
+			window.onload = function () {
+				startGame() // Запускаем игру
+			}
+		</script>
 	</body>
 </html>

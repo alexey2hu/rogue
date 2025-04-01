@@ -1,10 +1,3 @@
-import Enemy from './enemy.js'
-import Map from './map.js'
-import MapUpdate from './mapUpdate.js'
-import Player from './player.js'
-
-let gameMap, mapUpdate, player, enemies
-
 window.showGameStatus = function (message) {
 	const statusMessage = document.getElementById('status-message')
 	const gameStatus = document.getElementById('game-status')
@@ -92,3 +85,5 @@ window.startGame = function startGame() {
 	// Показываем окно состояния с блокировкой игры до нажатия кнопки
 	showGameStatus('Добро пожаловать в игру!', startGameplay)
 }
+
+window.startGameplay = startGameplay

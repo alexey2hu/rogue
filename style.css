@@ -87,22 +87,22 @@ h1 {
 	background-size: cover;
 }
 .tile- {
-	background-image: url('/images/tile-.png'); /* Пустое место */
+	background-image: url('images/tile-.png'); /* Пустое место */
 }
 .tile-W {
-	background-image: url('/images/tile-W.png'); /* Стена */
+	background-image: url('images/tile-W.png'); /* Стена */
 }
 .tile-E {
-	background-image: url('/images/tile-E.png');
+	background-image: url('images/tile-E.png');
 }
 .tile-P {
-	background-image: url('/images/tile-P.png');
+	background-image: url('images/tile-P.png');
 }
 .tile-HP {
-	background-image: url('/images/tile-HP.png');
+	background-image: url('images/tile-HP.png');
 }
 .tile-SW {
-	background-image: url('/images/tile-SW.png');
+	background-image: url('images/tile-SW.png');
 }
 
 /* Полоски здоровья */

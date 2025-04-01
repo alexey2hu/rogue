@@ -1,5 +1,3 @@
-console.log('map class loaded')
-
 // Класс для генерации и отображения карты
 class Map {
 	constructor() {
@@ -165,11 +163,11 @@ class Map {
 			}
 		}
 
-		// Проверяем, все ли клетки 'tывile-' были посещены
+		// Проверяем, все ли клетки 'tile-' были посещены
 		return this.grid.every((row, y) =>
 			row.every((cell, x) => cell !== 'tile-' || visited[y][x])
 		)
 	}
 }
 
-export default Map
+window.GameMap = Map

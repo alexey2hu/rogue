@@ -1,5 +1,3 @@
-import Utils from './utils.js'
-
 class Player {
 	constructor(gameMap, mapUpdate, enemies) {
 		this.gameMap = gameMap // Ссылка на объект карты
@@ -93,4 +91,4 @@ class Player {
 	}
 }
 
-export default Player
+window.Player = Player

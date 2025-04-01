@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=0.9" />
 
 		<!-- Шрифты -->
 		<link
@@ -24,7 +24,7 @@
 		/>
 		<!-- JQuery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body>
 		<h1>Игровое поле</h1>
@@ -53,9 +53,14 @@
 			</div>
 		</div>
 
-		<script type="module" src="js/game.js"></script>
+		<script src="js/enemy.js" defer></script>
+		<script src="js/map.js" defer></script>
+		<script src="js/mapUpdate.js" defer></script>
+		<script src="js/player.js" defer></script>
+		<script src="js/utils.js" defer></script>
+		<script src="js/game.js" defer></script>
+
 		<script>
-			// Убедись, что игра запускается только после полной загрузки страницы
 			window.onload = function () {
 				startGame() // Запускаем игру
 			}

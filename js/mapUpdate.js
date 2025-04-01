@@ -87,4 +87,4 @@ class MapUpdate {
 	}
 }
 
-export default MapUpdate
+window.MapUpdate = MapUpdate

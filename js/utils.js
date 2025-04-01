@@ -137,4 +137,4 @@ class Utils {
 	}
 }
 
-export default Utils
+window.Utils = Utils

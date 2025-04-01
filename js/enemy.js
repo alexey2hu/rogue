@@ -1,10 +1,8 @@
-import Utils from './utils.js'
-
 class Enemy {
 	static enemies = [] // Статический массив врагов
 
-	constructor(gameMap, mapUpdate, id, initialPosition) {
-		this.gameMap = gameMap
+	constructor(Map, mapUpdate, id, initialPosition) {
+		this.gameMap = Map
 		this.mapUpdate = mapUpdate
 		this.tileType = `tile-E`
 		this.health = 100
@@ -44,4 +42,4 @@ class Enemy {
 	}
 }
 
-export default Enemy
+window.Enemy = Enemy
